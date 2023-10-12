@@ -6,5 +6,7 @@ namespace DatabasePostgres.Persistance.Interface
     {
         void CreateTableUser();
         void UserAdd();
+        void UserUpdate();
+        void DeleteTableUser();
     }
 }
