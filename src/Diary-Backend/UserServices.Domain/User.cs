@@ -1,7 +1,7 @@
 ﻿
 namespace UserServices.Domain
 {
-   public class Users
+   public class User
     {
        public int id { get; set; }
        public string Login { get; set; }
