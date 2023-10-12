@@ -2,7 +2,7 @@
 
 namespace DatabasePostgres.Persistance.Config
 {
-    public class Config
+    public class Configs
     {
         public string Connection = $"Host={Host};Username={Login};Password={Password};Database={DatabaseName}";
 
