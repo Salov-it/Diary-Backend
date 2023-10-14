@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DatabasePostgres.Persistance.Config;
+using DatabasePostgres.Persistance.Interface;
+using DatabasePostgres.Persistance.Repository;
+using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 using System.Reflection;
 
 namespace DatabasePostgres.Persistance
@@ -7,7 +11,11 @@ namespace DatabasePostgres.Persistance
     {
         public static IServiceCollection AddDatabasePostgresPersistance(this IServiceCollection services)
         {
+            Configs configs = new Configs();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddSingleton<NpgsqlConnection>(new NpgsqlConnection(configs.Connection));
+
+            services.AddScoped<IUserRepositoryPostgres, UserRepositoryPostgres>();
             return services;
         }
     }
