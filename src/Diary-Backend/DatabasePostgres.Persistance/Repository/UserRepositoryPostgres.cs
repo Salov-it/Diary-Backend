@@ -3,7 +3,6 @@ using DatabasePostgres.Persistance.Interface;
 using DatabasePostgres.Persistance.SqlRequest.UserSqlRequest;
 using UserServices.Domain;
 using Npgsql;
-using System.Data;
 
 namespace DatabasePostgres.Persistance.Repository
 {
