@@ -10,5 +10,7 @@ namespace DatabasePostgres.Persistance.SqlRequest.UserSqlRequest
 
         public string UserAdd = $"INSERT INTO Users (login,password,INSERT INTO Users (login,password,Phone,Create,Update)" +
              "VALUES (@Login,@Password,@Phone,@Create,@Update))";
+
+        public string GetAll = "SELECT * FROM Users;";
     }
 }
