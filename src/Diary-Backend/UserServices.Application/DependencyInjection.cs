@@ -5,7 +5,7 @@ namespace UserServices.Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddUserServicesApplication(this IServiceCollection services)
+        public static IServiceCollection AddUserServices(this IServiceCollection services)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             return services;
