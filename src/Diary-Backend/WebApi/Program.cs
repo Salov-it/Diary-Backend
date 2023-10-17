@@ -11,7 +11,7 @@ builder.Services.AddUserServices();
 //Infrastructure
 builder.Services.AddDatabasePostgresPersistance();
 
-// Add services to the container.
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
