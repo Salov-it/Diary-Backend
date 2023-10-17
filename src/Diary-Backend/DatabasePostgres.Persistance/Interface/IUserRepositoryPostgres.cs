@@ -1,4 +1,4 @@
-﻿
+﻿using UserServices.Domain;
 
 namespace DatabasePostgres.Persistance.Interface
 {
@@ -8,6 +8,6 @@ namespace DatabasePostgres.Persistance.Interface
         void UserAdd(string Login,string Password,int Phone,DateTime Create,DateTime Update);
         void UserUpdate();
         void DeleteTableUser();
-        Task<List<string>> GetAll();
+        Task<List<User>> GetAll();
     }
 }

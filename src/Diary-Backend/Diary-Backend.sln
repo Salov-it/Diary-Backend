@@ -18,6 +18,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserServices.Domain", "UserServices.Domain\UserServices.Domain.csproj", "{503275BC-AA1B-4980-9C66-73C9F299FE92}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabasePostgres.Persistance", "DatabasePostgres.Persistance\DatabasePostgres.Persistance.csproj", "{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}"
+
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +38,10 @@ Global
 		{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35BF4AB1-9F0C-4A3F-8272-422132185E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35BF4AB1-9F0C-4A3F-8272-422132185E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35BF4AB1-9F0C-4A3F-8272-422132185E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35BF4AB1-9F0C-4A3F-8272-422132185E6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +51,7 @@ Global
 		{45BC196C-E32C-4FE7-8775-7F41478A3C2B} = {7C728165-E9F3-4B74-B997-323969EE2406}
 		{503275BC-AA1B-4980-9C66-73C9F299FE92} = {7C728165-E9F3-4B74-B997-323969EE2406}
 		{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615} = {15BA7608-5722-46BA-A8EA-8D02E80DA508}
+		{35BF4AB1-9F0C-4A3F-8272-422132185E6A} = {37470627-57AA-4069-8F11-D5D401E7290B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08143696-5D92-418C-B8E2-EE75DDFB1A0A}

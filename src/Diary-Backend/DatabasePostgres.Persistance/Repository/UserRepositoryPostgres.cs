@@ -3,7 +3,6 @@ using DatabasePostgres.Persistance.Interface;
 using DatabasePostgres.Persistance.SqlRequest.UserSqlRequest;
 using UserServices.Domain;
 using Npgsql;
-using System.Data;
 
 namespace DatabasePostgres.Persistance.Repository
 {
@@ -12,7 +11,7 @@ namespace DatabasePostgres.Persistance.Repository
         private readonly string _Connect;
         Configs configs = new Configs();
         UserSqlRequest _userSql = new UserSqlRequest();
-        List<string> getAll = new List<string>();
+        List<User> getAll = new List<User>();
 
         public UserRepositoryPostgres()
         {
@@ -55,7 +54,7 @@ namespace DatabasePostgres.Persistance.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<List<string>> GetAll()
+        public async Task<List<User>> GetAll()
         {
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.GetAll))
@@ -67,7 +66,7 @@ namespace DatabasePostgres.Persistance.Repository
                     var login = reader.GetString(0);
                     var password = reader.GetString(1);
                     var phone = reader.GetInt16(2);
-                        ;
+                    ;
                     User Content = new User
                     {
                         Login = login,
@@ -76,9 +75,11 @@ namespace DatabasePostgres.Persistance.Repository
 
 
                     };
-                    getAll.Add();
+                    getAll.Add(Content);
                 }
             }
+            return getAll;
         }
 
     }
+}
