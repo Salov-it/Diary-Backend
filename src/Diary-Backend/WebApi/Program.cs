@@ -1,4 +1,16 @@
+using UserServices.Application;
+using DatabasePostgres.Persistance;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+IConfiguration configuration = builder.Configuration;
+
+//UserServices
+builder.Services.AddUserServices();
+
+//Infrastructure
+builder.Services.AddDatabasePostgres();
 
 // Add services to the container.
 
