@@ -13,13 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DC23CC44-B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserServices", "UserServices", "{7C728165-E9F3-4B74-B997-323969EE2406}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserServices.Application", "UserServices.Application\UserServices.Application.csproj", "{45BC196C-E32C-4FE7-8775-7F41478A3C2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserServices.Application", "UserServices.Application\UserServices.Application.csproj", "{45BC196C-E32C-4FE7-8775-7F41478A3C2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserServices.Domain", "UserServices.Domain\UserServices.Domain.csproj", "{503275BC-AA1B-4980-9C66-73C9F299FE92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserServices.Domain", "UserServices.Domain\UserServices.Domain.csproj", "{503275BC-AA1B-4980-9C66-73C9F299FE92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcWebApi", "GrpcWebApi\GrpcWebApi.csproj", "{924D4C53-F1D8-45F0-8D07-AC2044AE26A0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabasePostgres.Persistance", "DatabasePostgres.Persistance\DatabasePostgres.Persistance.csproj", "{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabasePostgres.Persistance", "DatabasePostgres.Persistance\DatabasePostgres.Persistance.csproj", "{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{503275BC-AA1B-4980-9C66-73C9F299FE92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{503275BC-AA1B-4980-9C66-73C9F299FE92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{503275BC-AA1B-4980-9C66-73C9F299FE92}.Release|Any CPU.Build.0 = Release|Any CPU
-		{924D4C53-F1D8-45F0-8D07-AC2044AE26A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{924D4C53-F1D8-45F0-8D07-AC2044AE26A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{924D4C53-F1D8-45F0-8D07-AC2044AE26A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{924D4C53-F1D8-45F0-8D07-AC2044AE26A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,7 +45,6 @@ Global
 		{7C728165-E9F3-4B74-B997-323969EE2406} = {032062AC-0ED3-4EC9-9A41-942F93DA18C5}
 		{45BC196C-E32C-4FE7-8775-7F41478A3C2B} = {7C728165-E9F3-4B74-B997-323969EE2406}
 		{503275BC-AA1B-4980-9C66-73C9F299FE92} = {7C728165-E9F3-4B74-B997-323969EE2406}
-		{924D4C53-F1D8-45F0-8D07-AC2044AE26A0} = {37470627-57AA-4069-8F11-D5D401E7290B}
 		{2FA852FA-D6B1-4E73-9D6E-53AC10AF8615} = {15BA7608-5722-46BA-A8EA-8D02E80DA508}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
