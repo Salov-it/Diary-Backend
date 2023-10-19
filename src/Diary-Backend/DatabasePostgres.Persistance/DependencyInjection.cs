@@ -9,7 +9,7 @@ namespace DatabasePostgres.Persistance
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddDatabasePostgresPersistance(this IServiceCollection services)
+        public static IServiceCollection AddDatabasePostgres(this IServiceCollection services)
         {
             Configs configs = new Configs();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

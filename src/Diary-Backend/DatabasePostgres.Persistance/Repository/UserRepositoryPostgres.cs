@@ -17,13 +17,14 @@ namespace DatabasePostgres.Persistance.Repository
         {
             _Connect = configs.Connection;
         }
-        public async void CreateTableUser()
+        public async Task<string> CreateTableUser()
         {
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.CreateUserTable))
             {
                 await cmd.ExecuteNonQueryAsync();
             }
+            return "Таблица Users создана успешно";
         }
 
         public async void DeleteTableUser()
@@ -35,7 +36,7 @@ namespace DatabasePostgres.Persistance.Repository
             }
         }
 
-        public async void UserAdd(string Login, string Password, int Phone, DateTime Create, DateTime Update)
+        public async Task<string> UserAdd(string Login, string Password, int Phone, DateTime Create)
         {
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.UserAdd))
@@ -44,9 +45,9 @@ namespace DatabasePostgres.Persistance.Repository
                 cmd.Parameters.AddWithValue("Password", Password);
                 cmd.Parameters.AddWithValue("Phone", Phone);
                 cmd.Parameters.AddWithValue("Create", Create);
-                cmd.Parameters.AddWithValue("Update", Update);
                 await cmd.ExecuteNonQueryAsync();
             }
+            return "Пользователь зарегистрирован успешно";
         }
 
         public void UserUpdate()

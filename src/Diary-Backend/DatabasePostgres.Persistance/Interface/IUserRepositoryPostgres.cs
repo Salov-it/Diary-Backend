@@ -4,8 +4,8 @@ namespace DatabasePostgres.Persistance.Interface
 {
     public interface IUserRepositoryPostgres
     {
-        void CreateTableUser();
-        void UserAdd(string Login,string Password,int Phone,DateTime Create,DateTime Update);
+        Task<string> CreateTableUser();
+        Task<string> UserAdd(string Login,string Password,int Phone,DateTime Create);
         void UserUpdate();
         void DeleteTableUser();
         Task<List<User>> GetAll();

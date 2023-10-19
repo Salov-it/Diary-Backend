@@ -6,7 +6,7 @@ namespace UserServices.Application.Dto
     {
         public string Login { get; set; }
         public string Passwords { get; set; }
-        public string Phone { get; set; }
+        public int Phone { get; set; }
 
     }
 }
