@@ -36,7 +36,7 @@ namespace DatabasePostgres.Persistance.Repository
             }
         }
 
-        public async Task<string> UserAdd(string Login, string Password, int Phone, DateTime Create)
+        public async Task<string> UserAdd(string Login, string Password,string Phone, DateTime Create)
         {
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.UserAdd))
@@ -44,7 +44,7 @@ namespace DatabasePostgres.Persistance.Repository
                 cmd.Parameters.AddWithValue("Login", Login);
                 cmd.Parameters.AddWithValue("Password", Password);
                 cmd.Parameters.AddWithValue("Phone", Phone);
-                cmd.Parameters.AddWithValue("Create", Create);
+                cmd.Parameters.AddWithValue("Created", Create);
                 await cmd.ExecuteNonQueryAsync();
             }
             return "Пользователь зарегистрирован успешно";
@@ -66,7 +66,7 @@ namespace DatabasePostgres.Persistance.Repository
                 {
                     var login = reader.GetString(0);
                     var password = reader.GetString(1);
-                    var phone = reader.GetInt16(2);
+                    var phone = reader.GetString(2);
                     ;
                     User Content = new User
                     {

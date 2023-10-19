@@ -8,6 +8,7 @@ namespace UserServices.Application.CQRS.Command.UserRegistration
     {
         private readonly IUserRepositoryPostgres _userRepositoryPostgres;
         private readonly string _RegistrationResponseDto;
+        public string Resullt { get; set; }
        
         public Registration(IUserRepositoryPostgres userRepositoryPostgres)
         {
@@ -16,9 +17,10 @@ namespace UserServices.Application.CQRS.Command.UserRegistration
         }
         public async Task<string> RegisterAsync(RegistrationResponseDto registrationResponseDto)
         {
+            _userRepositoryPostgres.CreateTableUser();
             DateTime CreateData = DateTime.Now;
-            string Content = _userRepositoryPostgres.UserAdd(registrationResponseDto.Login,registrationResponseDto.Passwords,
-              registrationResponseDto.Phone,CreateData);
+            return  await _userRepositoryPostgres.UserAdd(registrationResponseDto.Login,registrationResponseDto.Password,
+            registrationResponseDto.Phone,CreateData);  
         }
     }
 }

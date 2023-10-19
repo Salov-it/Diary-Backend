@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
-
+using UserServices.Application.CQRS.Command.UserRegistration;
+using UserServices.Application.Dto;
 
 namespace WebApi.Controllers
 {
@@ -9,19 +9,24 @@ namespace WebApi.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IMediator mediator;
         public AccountController(IMediator mediator)
         {
-            _mediator = mediator;
+            this.mediator = mediator;
         }
 
 
         [HttpPost("AccountRegistration")]
-        public async Task<IActionResult> AccountRegistration([FromBody] string value)
+        public async Task<IActionResult> AccountRegistration([FromBody] RegistrationResponseDto registration)
         {
-            return Ok(value);
+            var Content = new RegistrationCommand
+            {
+                registrationDto = registration
+            };
+            var answer = await mediator.Send(Content);
+            return Ok(answer);
         }
 
-       
+     
     }
 }
