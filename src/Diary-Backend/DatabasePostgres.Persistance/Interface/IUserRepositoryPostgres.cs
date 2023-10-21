@@ -6,8 +6,7 @@ namespace DatabasePostgres.Persistance.Interface
     {
         Task<string> CreateTableUser();
         Task<string> UserAdd(string Login,string Password,string Phone,DateTime Create);
-        void UserUpdate();
-        void DeleteTableUser();
-        Task<List<User>> GetAll();
+        Task<string> UserUpdate(string Login,string Phone);
+        
     }
 }

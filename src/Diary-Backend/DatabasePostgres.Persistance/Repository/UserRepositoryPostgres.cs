@@ -3,6 +3,7 @@ using DatabasePostgres.Persistance.Interface;
 using DatabasePostgres.Persistance.SqlRequest.UserSqlRequest;
 using UserServices.Domain;
 using Npgsql;
+using System.Numerics;
 
 namespace DatabasePostgres.Persistance.Repository
 {
@@ -41,9 +42,16 @@ namespace DatabasePostgres.Persistance.Repository
             return "Пользователь зарегистрирован успешно";
         }
 
-        public void UserUpdate()
+        public async Task<string> UserUpdate(string Login,string Phone)
         {
-            throw new NotImplementedException();
+            await using var dataSource = NpgsqlDataSource.Create(_Connect);
+            await using (var cmd = dataSource.CreateCommand(_userSql.UserUpdate))
+            {
+                cmd.Parameters.AddWithValue("Login", Login);
+                cmd.Parameters.AddWithValue("Phone", Phone);
+                await cmd.ExecuteNonQueryAsync();
+            }
+            return "Выполнено";
         }
 
     }
