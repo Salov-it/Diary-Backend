@@ -27,15 +27,6 @@ namespace DatabasePostgres.Persistance.Repository
             return "Таблица Users создана успешно";
         }
 
-        public async void DeleteTableUser()
-        {
-            await using var dataSource = NpgsqlDataSource.Create(_Connect);
-            await using (var cmd = dataSource.CreateCommand(_userSql.DeleteUserTable))
-            {
-                await cmd.ExecuteNonQueryAsync();
-            }
-        }
-
         public async Task<string> UserAdd(string Login, string Password,string Phone, DateTime Create)
         {
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
@@ -53,33 +44,6 @@ namespace DatabasePostgres.Persistance.Repository
         public void UserUpdate()
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<List<User>> GetAll()
-        {
-            await using var dataSource = NpgsqlDataSource.Create(_Connect);
-            await using (var cmd = dataSource.CreateCommand(_userSql.GetAll))
-            {
-                await using var reader = await cmd.ExecuteReaderAsync();
-
-                while (await reader.ReadAsync())
-                {
-                    var login = reader.GetString(0);
-                    var password = reader.GetString(1);
-                    var phone = reader.GetString(2);
-                    ;
-                    User Content = new User
-                    {
-                        Login = login,
-                        Password = password,
-                        Phone = phone,
-
-
-                    };
-                    getAll.Add(Content);
-                }
-            }
-            return getAll;
         }
 
     }
