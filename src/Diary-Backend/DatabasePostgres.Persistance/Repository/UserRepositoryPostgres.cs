@@ -4,7 +4,7 @@ using DatabasePostgres.Persistance.SqlRequest.UserSqlRequest;
 using UserServices.Domain;
 using Npgsql;
 using System.Numerics;
-
+using UserServices.Application.Dto;
 namespace DatabasePostgres.Persistance.Repository
 {
     public class UserRepositoryPostgres : IUserRepositoryPostgres
@@ -52,6 +52,21 @@ namespace DatabasePostgres.Persistance.Repository
                 await cmd.ExecuteNonQueryAsync();
             }
             return "Выполнено";
+        }
+
+        public string GetByUserInfoResult { get; set; }
+        public async Task<string> GetByUserId(string Login)
+        {
+            await using var dataSource = NpgsqlDataSource.Create(_Connect);
+            await using (var cmd = dataSource.CreateCommand(_userSql.GetByUserInfo))
+            await using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    GetByUserInfoResult = reader.GetString(0);
+                }
+            }
+            return GetByUserInfoResult;
         }
 
     }
