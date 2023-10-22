@@ -61,6 +61,7 @@ namespace DatabasePostgres.Persistance.Repository
             await using (var cmd = dataSource.CreateCommand(_userSql.GetByUserInfo))
             await using (var reader = await cmd.ExecuteReaderAsync())
             {
+                cmd.Parameters.AddWithValue("Login", Login);
                 while (await reader.ReadAsync())
                 {
                     GetByUserInfoResult = reader.GetString(0);
