@@ -3,8 +3,6 @@ using DatabasePostgres.Persistance.Interface;
 using DatabasePostgres.Persistance.SqlRequest.UserSqlRequest;
 using UserServices.Domain;
 using Npgsql;
-using System.Numerics;
-using UserServices.Application.Dto;
 using DatabasePostgres.Persistance.Dto;
 
 namespace DatabasePostgres.Persistance.Repository
@@ -56,8 +54,8 @@ namespace DatabasePostgres.Persistance.Repository
             return "Выполнено";
         }
 
-        public List<UserInfoDto> GetByUserInfoResult = new List<UserInfoDto>();
-        public async Task<List<UserInfoDto>> GetByUserId(string Login)
+        public UserInfoDto GetByUserInfoResult = new UserInfoDto();
+        public async Task<UserInfoDto> GetByUserId(string Login)
         {
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.GetByUserInfo))
@@ -69,12 +67,11 @@ namespace DatabasePostgres.Persistance.Repository
                     var login = reader.GetString(0);
                     var password = reader.GetString(1);
 
-                    UserInfoDto userInfoDto = new UserInfoDto
+                    GetByUserInfoResult = new UserInfoDto
                     {
                         Login = login,
                         Password = password
                     };
-                    GetByUserInfoResult.Add(userInfoDto);
                 }
             }
             return GetByUserInfoResult;

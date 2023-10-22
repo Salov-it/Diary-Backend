@@ -46,7 +46,7 @@ namespace UserServices.Application.CQRS.Command.Authorization
                 var tokenString = tokenHandler.WriteToken(token);
                 Result = tokenString;
             }
-            else { Result = "Ошибка авторизации 401" };
+            else { Result = "Ошибка авторизации 401"; };
 
             return Result;
         }
