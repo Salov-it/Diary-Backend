@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserServices.Application.CQRS.Command.Authorization;
 using UserServices.Application.CQRS.Command.UserRegistration;
@@ -37,6 +38,15 @@ namespace WebApi.Controllers
             };
             var answer = await mediator.Send(Content);
             return Ok(answer);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("User")]
+        public async Task<IActionResult> User()
+        {
+           
+            
+            return Ok("Все четко");
         }
 
     }
