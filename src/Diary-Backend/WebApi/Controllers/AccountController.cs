@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UserServices.Application.CQRS.Command.Authorization;
 using UserServices.Application.CQRS.Command.UserRegistration;
 using UserServices.Application.Dto;
 
@@ -27,6 +28,16 @@ namespace WebApi.Controllers
             return Ok(answer);
         }
 
-     
+        [HttpPost("Authorization")]
+        public async Task<IActionResult> Authorization([FromBody] UserInfoDto userInfo)
+        {
+            var Content = new AuthorizationCommand
+            {
+                UserInfo = userInfo
+            };
+            var answer = await mediator.Send(Content);
+            return Ok(answer);
+        }
+
     }
 }

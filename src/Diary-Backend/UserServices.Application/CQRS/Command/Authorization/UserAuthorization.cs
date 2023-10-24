@@ -6,6 +6,7 @@ using System.Text;
 using UserServices.Application.Config;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace UserServices.Application.CQRS.Command.Authorization
 {
@@ -13,6 +14,7 @@ namespace UserServices.Application.CQRS.Command.Authorization
     {
         private readonly IUserRepositoryPostgres _userRepository;
         JwtSettings jwtSettings = new JwtSettings();
+        UserJwtToken _userJwtToken = new UserJwtToken();
 
         public UserAuthorization(IUserRepositoryPostgres userRepository)
         {
@@ -44,9 +46,18 @@ namespace UserServices.Application.CQRS.Command.Authorization
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
-                Result = tokenString;
+
+               _userJwtToken.JwtToken = tokenString;
+               var Content = JsonSerializer.Serialize(_userJwtToken);
+               Result = Content;
             }
-            else { Result = "Ошибка авторизации 401"; };
+            else 
+            {
+
+                _userJwtToken.Error = "Error Authorization 401";
+                var Content = JsonSerializer.Serialize(_userJwtToken);
+                Result = Content;
+            };
 
             return Result;
         }

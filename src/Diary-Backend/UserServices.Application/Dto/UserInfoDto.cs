@@ -6,7 +6,5 @@ namespace UserServices.Application.Dto
     {
         public string Login { get; set; }
         public string Password { get; set; }
-
-        public string JwtToken { get; set; }
     }
 }

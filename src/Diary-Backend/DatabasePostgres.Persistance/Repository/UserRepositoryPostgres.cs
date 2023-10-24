@@ -57,21 +57,26 @@ namespace DatabasePostgres.Persistance.Repository
         public UserInfoDto GetByUserInfoResult = new UserInfoDto();
         public async Task<UserInfoDto> GetByUserId(string Login)
         {
+            
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.GetByUserInfo))
-            await using (var reader = await cmd.ExecuteReaderAsync())
             {
-                cmd.Parameters.AddWithValue("Login", Login);
-                while (await reader.ReadAsync())
-                {
-                    var login = reader.GetString(0);
-                    var password = reader.GetString(1);
+                cmd.Parameters.AddWithValue("@login",Login);
 
-                    GetByUserInfoResult = new UserInfoDto
+                await using (var reader = await cmd.ExecuteReaderAsync())
+                {
+
+                    while (await reader.ReadAsync())
                     {
-                        Login = login,
-                        Password = password
-                    };
+                        var login = reader.GetString(0);
+                        var password = reader.GetString(1);
+
+                        GetByUserInfoResult = new UserInfoDto
+                        {
+                            Login = login,
+                            Password = password
+                        };
+                    }
                 }
             }
             return GetByUserInfoResult;

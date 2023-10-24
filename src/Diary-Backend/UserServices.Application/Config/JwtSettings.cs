@@ -2,7 +2,7 @@
 {
     public class JwtSettings
     {
-        public string Key = "Salov_syka_jwt_generalishin";
+        public string Key = "Salov_syka_jwt_jdhdhsugsgdfuidhf_generalishin";
 
         public string Issuer = "salovit.ru";
 

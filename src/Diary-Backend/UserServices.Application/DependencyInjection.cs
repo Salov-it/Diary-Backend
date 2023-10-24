@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Text;
 using UserServices.Application.Config;
+using UserServices.Application.CQRS.Command.Authorization;
 using UserServices.Application.CQRS.Command.UserRegistration;
 using UserServices.Application.Interface;
 
@@ -20,6 +21,12 @@ namespace UserServices.Application
             services.AddScoped<IRegistration,Registration>();
             services.AddScoped<RegistrationCommand>();
             services.AddScoped<RegistrationHandler>();
+
+            services.AddScoped<IUserAuthorization,UserAuthorization>();
+            services.AddScoped<AuthorizationCommand>();
+            services.AddScoped<AuthorizationHandler>();
+            
+
 
             services.AddAuthentication(options =>
             {
