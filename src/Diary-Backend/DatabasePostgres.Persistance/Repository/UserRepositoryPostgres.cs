@@ -71,11 +71,13 @@ namespace DatabasePostgres.Persistance.Repository
                     {
                         var login = reader.GetString(0);
                         var password = reader.GetString(1);
+                        var role = reader.GetString(2);
 
                         GetByUserInfoResult = new UserInfoDto
                         {
                             Login = login,
-                            Password = password
+                            Password = password,
+                            Role = role
                         };
                     }
                 }

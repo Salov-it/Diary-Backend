@@ -7,6 +7,7 @@ using UserServices.Application.Config;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text.Json;
+using System.Net;
 
 namespace UserServices.Application.CQRS.Command.Authorization
 {
@@ -30,25 +31,28 @@ namespace UserServices.Application.CQRS.Command.Authorization
             if(UserInfoContent.Login == userInfoDto.Login && UserInfoContent.Password == userInfoDto.Password)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
+                var key = Encoding.UTF8.GetBytes(jwtSettings.Key);
 
                 var payload = new JwtPayload
                 {
                     {"name", UserInfoContent.Login},
                     {"role", UserInfoContent.Role}
                 };
+                
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, UserInfoContent.Login)
+                        new Claim(ClaimTypes.Name, UserInfoContent.Login),
+                       
                     }),
 
                     Expires = DateTime.UtcNow.AddMinutes(int.Parse(jwtSettings.DurationInMinutes.ToString())),
-
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
                 };
+                var credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
+                var header = new JwtHeader(credentials);
+                var token = new JwtSecurityToken(header, payload);
+
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
 
