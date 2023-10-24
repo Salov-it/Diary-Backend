@@ -32,6 +32,11 @@ namespace UserServices.Application.CQRS.Command.Authorization
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
 
+                var payload = new JwtPayload
+                {
+                    {"name", UserInfoContent.Login},
+                    {"role", UserInfoContent.Role}
+                };
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
@@ -53,12 +58,10 @@ namespace UserServices.Application.CQRS.Command.Authorization
             }
             else 
             {
-
                 _userJwtToken.Error = "Error Authorization 401";
                 var Content = JsonSerializer.Serialize(_userJwtToken);
                 Result = Content;
             };
-
             return Result;
         }
     }

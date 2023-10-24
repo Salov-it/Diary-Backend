@@ -36,6 +36,7 @@ namespace DatabasePostgres.Persistance.Repository
                 cmd.Parameters.AddWithValue("Login", Login);
                 cmd.Parameters.AddWithValue("Password", Password);
                 cmd.Parameters.AddWithValue("Phone", Phone);
+                cmd.Parameters.AddWithValue("Role","User");
                 cmd.Parameters.AddWithValue("Created", Create);
                 await cmd.ExecuteNonQueryAsync();
             }
