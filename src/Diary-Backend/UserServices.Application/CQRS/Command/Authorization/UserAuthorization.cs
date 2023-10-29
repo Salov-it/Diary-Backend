@@ -7,7 +7,6 @@ using UserServices.Application.Config;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authentication.OAuth;
 
 
 
