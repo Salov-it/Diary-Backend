@@ -1,5 +1,6 @@
 using UserServices.Application;
 using DatabasePostgres.Persistance;
+using NotesServices.Application;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ builder.Services.AddUserServices();
 
 //Infrastructure
 builder.Services.AddDatabasePostgres();
+
+//NotesServices
+builder.Services.AddNotesServices();
 
 // Add services to the container.
 
