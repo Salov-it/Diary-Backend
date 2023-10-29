@@ -7,13 +7,13 @@ using UserServices.Application.Config;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.OAuth;
 
 namespace UserServices.Application.CQRS.Command.Authorization
 {
     public class UserAuthorization : IUserAuthorization
     {
         private readonly IUserRepositoryPostgres _userRepository;
-        JwtSettings jwtSettings = new JwtSettings();
         UserJwtToken _userJwtToken = new UserJwtToken();
 
         public UserAuthorization(IUserRepositoryPostgres userRepository)
@@ -29,36 +29,17 @@ namespace UserServices.Application.CQRS.Command.Authorization
 
             if(UserInfoContent.Login == userInfoDto.Login && UserInfoContent.Password == userInfoDto.Password)
             {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
+                var claims = new List<Claim> { new Claim(ClaimTypes.Name,userInfoDto.Login) };
 
-                var payload = new JwtPayload
-                {
-                    {"name", UserInfoContent.Login},
-                    {"role", UserInfoContent.Role}
-                };
-                
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(ClaimTypes.Name, UserInfoContent.Login),
-                       
-                    }),
+                var jwt = new JwtSecurityToken(issuer: JwtSettings.Issuer,
+                    audience: JwtSettings.Audience,
+                    claims: claims,
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
+                    signingCredentials: new SigningCredentials(JwtSettings.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
-                    Expires = DateTime.UtcNow.AddMinutes(int.Parse(jwtSettings.DurationInMinutes.ToString())),
-
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature),
-                    
-                };
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var tokenString = tokenHandler.WriteToken(token);
-
-               _userJwtToken.JwtToken = tokenString;
-               var Content = JsonSerializer.Serialize(_userJwtToken);
-               Result = Content;
+                _userJwtToken.JwtToken = new JwtSecurityTokenHandler().WriteToken(jwt);
+                var Content = JsonSerializer.Serialize(_userJwtToken);
+                Result = Content;
             }
             else 
             {

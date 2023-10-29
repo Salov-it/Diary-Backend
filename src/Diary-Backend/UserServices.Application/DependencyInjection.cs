@@ -15,7 +15,6 @@ namespace UserServices.Application
     {
         public static IServiceCollection AddUserServices(this IServiceCollection services)
         {
-            JwtSettings jwtSettings = new JwtSettings();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddScoped<IRegistration,Registration>();
@@ -39,11 +38,11 @@ namespace UserServices.Application
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Key)),
+                    IssuerSigningKey = JwtSettings.GetSymmetricSecurityKey(),
                     ValidateIssuer = true,
-                    ValidIssuer = jwtSettings.Issuer,
+                    ValidIssuer = JwtSettings.Issuer,
                     ValidateAudience = true,
-                    ValidAudience = jwtSettings.Audience,
+                    ValidAudience = JwtSettings.Audience,
                     ClockSkew = TimeSpan.Zero
                 };
             });

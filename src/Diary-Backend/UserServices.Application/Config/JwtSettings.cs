@@ -1,13 +1,19 @@
-﻿namespace UserServices.Application.Config
+﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+namespace UserServices.Application.Config
 {
     public class JwtSettings
     {
-        public string Key = "Salov_syka_jwt_jdhdhsugsgdfuidhf_generalishin";
+        public const string Key = "Salov_syka_jwt_jdhdhsugsgdfuidhf_generalishin";
 
-        public string Issuer = "salovit.ru";
+        public const string Issuer = "salovit.ru";
 
-        public string Audience = "salovit.ru";
-
+        public const string Audience = "salovit.ru";
         public int DurationInMinutes = 60;
+
+        public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key));
     }
 }

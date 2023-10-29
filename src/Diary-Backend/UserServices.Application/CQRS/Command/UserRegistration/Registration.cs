@@ -17,6 +17,7 @@ namespace UserServices.Application.CQRS.Command.UserRegistration
         }
         public async Task<string> RegisterAsync(RegistrationResponseDto registrationResponseDto)
         {
+            
             DateTime CreateData = DateTime.Now;
             return  await _userRepositoryPostgres.UserAdd(registrationResponseDto.Login,registrationResponseDto.Password,
             registrationResponseDto.Phone,CreateData);  
