@@ -9,6 +9,8 @@ using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.OAuth;
 
+
+
 namespace UserServices.Application.CQRS.Command.Authorization
 {
     public class UserAuthorization : IUserAuthorization
@@ -29,7 +31,8 @@ namespace UserServices.Application.CQRS.Command.Authorization
 
             if(UserInfoContent.Login == userInfoDto.Login && UserInfoContent.Password == userInfoDto.Password)
             {
-                var claims = new List<Claim> { new Claim(ClaimTypes.Name,userInfoDto.Login) };
+                var claims = new List<Claim> { new Claim(ClaimTypes.Name,userInfoDto.Login),
+                new Claim(ClaimTypes.Role,UserInfoContent.Role)};
 
                 var jwt = new JwtSecurityToken(issuer: JwtSettings.Issuer,
                     audience: JwtSettings.Audience,
