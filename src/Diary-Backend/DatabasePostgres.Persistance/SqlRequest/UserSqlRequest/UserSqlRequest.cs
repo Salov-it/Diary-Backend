@@ -11,7 +11,7 @@ namespace DatabasePostgres.Persistance.SqlRequest.UserSqlRequest
 
         public string UserUpdate = "UPDATE Users SET phone = @Phone WHERE login = @Login;";
 
-        public string GetByUserInfo = "SELECT login,password,Role FROM Users WHERE login = @login;";
+        public string GetByUserInfo = "SELECT login,password,Role FROM Users WHERE login = @Login;";
 
 
 

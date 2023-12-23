@@ -1,11 +1,9 @@
-﻿
-
-using UserServices.Application.Dto;
+﻿using UserDto.Dto;
 
 namespace UserServices.Application.Interface
 {
     public interface IRegistration
     {
-        Task<string> RegisterAsync(RegistrationResponseDto registrationResponseDto);
+        Task<string> RegisterAsync(UserAddDto userAdd);
     }
 }

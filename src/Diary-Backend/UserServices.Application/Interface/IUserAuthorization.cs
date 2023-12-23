@@ -1,9 +1,9 @@
-﻿using UserServices.Application.Dto;
+﻿using UserDto.Dto;
 
 namespace UserServices.Application.Interface
 {
     public interface IUserAuthorization
     {
-        Task<string>Authorization(UserInfoDto userInfoDto);
+        Task<string>Authorization(UserLoginDto UserLoginDto);
     }
 }

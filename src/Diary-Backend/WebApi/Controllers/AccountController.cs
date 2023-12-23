@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UserDto.Dto;
 using UserServices.Application.CQRS.Command.Authorization;
 using UserServices.Application.CQRS.Command.UserRegistration;
-using UserServices.Application.Dto;
 
 namespace WebApi.Controllers
 {
@@ -19,22 +19,22 @@ namespace WebApi.Controllers
 
 
         [HttpPost("AccountRegistration")]
-        public async Task<IActionResult> AccountRegistration([FromBody] RegistrationResponseDto registration)
+        public async Task<IActionResult> AccountRegistration([FromBody] UserAddDto UserAdd)
         {
             var Content = new RegistrationCommand
             {
-                registrationDto = registration
+                UserAdd = UserAdd
             };
             var answer = await mediator.Send(Content);
             return Ok(answer);
         }
 
         [HttpPost("Authorization")]
-        public async Task<IActionResult> Authorization([FromBody] UserInfoDto userInfo)
+        public async Task<IActionResult> Authorization([FromBody] UserLoginDto UserLoginDto)
         {
             var Content = new AuthorizationCommand
             {
-                UserInfo = userInfo
+                UserLoginDto = UserLoginDto
             };
             var answer = await mediator.Send(Content);
             return Ok(answer);

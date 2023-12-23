@@ -13,7 +13,7 @@ namespace UserServices.Application.CQRS.Command.Authorization
         }
         public async Task<string> Handle(AuthorizationCommand request, CancellationToken cancellationToken)
         {
-            var Content = await _userAuthorization.Authorization(request.UserInfo);
+            var Content = await _userAuthorization.Authorization(request.UserLoginDto);
             return Content;
         }
     }

@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using UserServices.Application.Dto;
+using UserDto.Dto;
 
 namespace UserServices.Application.CQRS.Command.Authorization
 {
     public class AuthorizationCommand : IRequest<string>
     {
-      public UserInfoDto UserInfo { get; set; }
+      public UserLoginDto UserLoginDto { get; set; }
     }
 }

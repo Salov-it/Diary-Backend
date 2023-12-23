@@ -13,15 +13,15 @@ namespace UserServices.Application.CQRS.Command.UserRegistration
         }
         public async Task<string> Handle(RegistrationCommand request, CancellationToken cancellationToken)
         {
-            var Content = await _RegisterAsync.RegisterAsync(request.registrationDto);
+            var Content = await _RegisterAsync.RegisterAsync(request.UserAdd);
 
             if (Content != null)
             {
-                Resullt = "Пользователь успешно зарегистрирован";
+                Resullt = "200";
             }
             else
             {
-                Resullt = "Ошибка регистрации";
+                Resullt = "500";
             }
             return Resullt;
         }

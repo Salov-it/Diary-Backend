@@ -1,9 +1,8 @@
 ﻿using DatabasePostgres.Persistance.Config;
 using DatabasePostgres.Persistance.Interface;
 using DatabasePostgres.Persistance.SqlRequest.UserSqlRequest;
-using UserServices.Domain;
 using Npgsql;
-using DatabasePostgres.Persistance.Dto;
+using UserDto.Dto;
 
 namespace DatabasePostgres.Persistance.Repository
 {
@@ -12,7 +11,7 @@ namespace DatabasePostgres.Persistance.Repository
         private readonly string _Connect;
         Configs configs = new Configs();
         UserSqlRequest _userSql = new UserSqlRequest();
-        List<User> getAll = new List<User>();
+        UserInfoDto _UserInfoDto = new UserInfoDto();
 
         public UserRepositoryPostgres()
         {
@@ -25,44 +24,34 @@ namespace DatabasePostgres.Persistance.Repository
             {
                 await cmd.ExecuteNonQueryAsync();
             }
-            return "Таблица Users создана успешно";
+            return "200";
         }
 
-        public async Task<string> UserAdd(string Login, string Password,string Phone, DateTime Create)
+        public async Task<string> UserAdd(UserAddDto userAdd)
         {
-            await using var dataSource = NpgsqlDataSource.Create(_Connect);
-            await using (var cmd = dataSource.CreateCommand(_userSql.UserAdd))
+            await using var conn = new NpgsqlConnection(_Connect);
+            await conn.OpenAsync();
+            await using var cmd = new NpgsqlCommand(_userSql.UserAdd, conn)
             {
-                cmd.Parameters.AddWithValue("Login", Login);
-                cmd.Parameters.AddWithValue("Password", Password);
-                cmd.Parameters.AddWithValue("Phone", Phone);
-                cmd.Parameters.AddWithValue("Role","User");
-                cmd.Parameters.AddWithValue("Created", Create);
-                await cmd.ExecuteNonQueryAsync();
-            }
-            return "Пользователь зарегистрирован успешно";
+                Parameters =
+                {
+                    new() { Value = userAdd.Login},
+                    new() { Value = userAdd.Password },
+                    new() { Value = userAdd.Phone },
+                    new() { Value = userAdd.Created }
+                }
+            };
+            await cmd.ExecuteNonQueryAsync();
+            return "200";
         }
 
-        public async Task<string> UserUpdate(string Login,string Phone)
-        {
-            await using var dataSource = NpgsqlDataSource.Create(_Connect);
-            await using (var cmd = dataSource.CreateCommand(_userSql.UserUpdate))
-            {
-                cmd.Parameters.AddWithValue("Login", Login);
-                cmd.Parameters.AddWithValue("Phone", Phone);
-                await cmd.ExecuteNonQueryAsync();
-            }
-            return "Выполнено";
-        }
-
-        public UserInfoDto GetByUserInfoResult = new UserInfoDto();
-        public async Task<UserInfoDto> GetByUserId(string Login)
+        public async Task<UserInfoDto> GetByUserLogin(UserLoginDto UserLoginDto)
         {
             
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.GetByUserInfo))
             {
-                cmd.Parameters.AddWithValue("@login",Login);
+                cmd.Parameters.AddWithValue("@Login",UserLoginDto.Login);
 
                 await using (var reader = await cmd.ExecuteReaderAsync())
                 {
@@ -72,17 +61,17 @@ namespace DatabasePostgres.Persistance.Repository
                         var login = reader.GetString(0);
                         var password = reader.GetString(1);
                         var role = reader.GetString(2);
-
-                        GetByUserInfoResult = new UserInfoDto
+                        UserInfoDto UserInfo = new UserInfoDto
                         {
                             Login = login,
                             Password = password,
                             Role = role
                         };
+                        _UserInfoDto = UserInfo;
                     }
                 }
             }
-            return GetByUserInfoResult;
+            return _UserInfoDto;
         }
 
     }

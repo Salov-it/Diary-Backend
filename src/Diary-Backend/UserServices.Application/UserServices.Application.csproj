@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DatabasePostgres.Persistance\DatabasePostgres.Persistance.csproj" />
+   
   </ItemGroup>
 
 </Project>

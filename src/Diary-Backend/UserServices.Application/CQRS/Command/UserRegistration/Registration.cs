@@ -1,4 +1,5 @@
 ﻿using DatabasePostgres.Persistance.Interface;
+using UserDto.Dto;
 using UserServices.Application.Dto;
 using UserServices.Application.Interface;
 
@@ -15,12 +16,10 @@ namespace UserServices.Application.CQRS.Command.UserRegistration
             _userRepositoryPostgres = userRepositoryPostgres;
            
         }
-        public async Task<string> RegisterAsync(RegistrationResponseDto registrationResponseDto)
+        public async Task<string> RegisterAsync(UserAddDto userAdd)
         {
             
-            DateTime CreateData = DateTime.Now;
-            return  await _userRepositoryPostgres.UserAdd(registrationResponseDto.Login,registrationResponseDto.Password,
-            registrationResponseDto.Phone,CreateData);  
+            return  await _userRepositoryPostgres.UserAdd(userAdd);  
         }
     }
 }

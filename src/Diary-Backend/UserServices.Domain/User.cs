@@ -7,7 +7,6 @@ namespace UserServices.Domain
        public string Login { get; set; }
        public string Password { get; set; }
        public string Phone { get; set; }
-       public DateTime Create { get; set; }
-       public DateTime Update { get; set; }
+       public DateTime Created { get; set; }
     }
 }

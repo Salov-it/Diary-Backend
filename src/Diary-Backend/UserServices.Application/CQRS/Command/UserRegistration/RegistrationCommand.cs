@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using UserServices.Application.Dto;
+using UserDto.Dto;
 
 namespace UserServices.Application.CQRS.Command.UserRegistration
 {
     public class RegistrationCommand : IRequest<string>
     {
-        public RegistrationResponseDto registrationDto { get; set; }
+        public UserAddDto UserAdd { get; set; }
     }
 }
