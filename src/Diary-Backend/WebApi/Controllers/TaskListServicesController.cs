@@ -1,5 +1,4 @@
-﻿using DatabasePostgres.Persistance.Dto.TaskListDto;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -7,6 +6,7 @@ using TaskListServices.Application.CQRS.Command.Create;
 using TaskListServices.Application.CQRS.Command.Delete;
 using TaskListServices.Application.CQRS.Command.GetAll;
 using TaskListServices.Application.CQRS.Command.Update;
+using TaskListServices.Dto;
 
 namespace WebApi.Controllers
 {

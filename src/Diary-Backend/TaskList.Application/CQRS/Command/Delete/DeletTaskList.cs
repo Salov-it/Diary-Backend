@@ -1,6 +1,6 @@
-﻿using DatabasePostgres.Persistance.Dto.TaskListDto;
-using DatabasePostgres.Persistance.Interface;
+﻿using DatabasePostgres.Persistance.Interface;
 using TaskListServices.Application.Interface;
+using TaskListServices.Dto;
 
 namespace TaskListServices.Application.CQRS.Command.Delete
 {
@@ -15,5 +15,6 @@ namespace TaskListServices.Application.CQRS.Command.Delete
         {
             return await _taskListRepositoryPostgres.Delete(deleteTaskListDto);
         }
+
     }
 }

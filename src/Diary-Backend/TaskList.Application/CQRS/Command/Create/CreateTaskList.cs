@@ -1,10 +1,12 @@
-﻿using TaskListServices.Application.Interface;
+﻿using DatabasePostgres.Persistance.Interface;
+using TaskListServices.Application.Interface;
+using TaskListServices.Dto;
 
 namespace TaskListServices.Application.CQRS.Command.Create
 {
     public class CreateTaskList : ICreateTaskList
     {
-        private ITaskListRepositoryPostgres _TaskListRepositoryPostgres;
+        private readonly ITaskListRepositoryPostgres _TaskListRepositoryPostgres;
         public CreateTaskList(ITaskListRepositoryPostgres taskListRepositoryPostgres)
         {
             _TaskListRepositoryPostgres = taskListRepositoryPostgres;
@@ -13,5 +15,6 @@ namespace TaskListServices.Application.CQRS.Command.Create
         {
           return  await _TaskListRepositoryPostgres.Add(taskListDto);
         }
+
     }
 }

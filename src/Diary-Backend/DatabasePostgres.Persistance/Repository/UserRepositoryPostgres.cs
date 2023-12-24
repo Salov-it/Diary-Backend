@@ -8,7 +8,7 @@ namespace DatabasePostgres.Persistance.Repository
 {
     public class UserRepositoryPostgres : IUserRepositoryPostgres
     {
-        private readonly string _Connect;
+        public readonly string _Connect;
         Configs configs = new Configs();
         UserSqlRequest _userSql = new UserSqlRequest();
         List<UserInfoDto> _UserInfoDto = new List<UserInfoDto>();

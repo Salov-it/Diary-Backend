@@ -5,7 +5,7 @@ using TaskListServices.Dto;
 
 namespace DatabasePostgres.Persistance.Repository
 {
-    public class TaskListRepositoryPostgres : ITaskListRepositoryPostgres
+    public class TaskListRepositoryPostgres : UserRepositoryPostgres, ITaskListRepositoryPostgres
     {
         TaskListSqlRequest _TaskSql = new TaskListSqlRequest();
         public async Task<string> Add(PostTaskListDto taskListDto)
