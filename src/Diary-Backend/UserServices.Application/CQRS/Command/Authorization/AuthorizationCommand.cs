@@ -5,6 +5,6 @@ namespace UserServices.Application.CQRS.Command.Authorization
 {
     public class AuthorizationCommand : IRequest<string>
     {
-      public UserLoginDto UserLoginDto { get; set; }
+      public UserAutDto UserAutDto { get; set; }
     }
 }

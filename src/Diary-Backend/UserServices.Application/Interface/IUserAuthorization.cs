@@ -4,6 +4,6 @@ namespace UserServices.Application.Interface
 {
     public interface IUserAuthorization
     {
-        Task<string>Authorization(UserLoginDto UserLoginDto);
+        Task<string>Authorization(UserAutDto userAuts);
     }
 }

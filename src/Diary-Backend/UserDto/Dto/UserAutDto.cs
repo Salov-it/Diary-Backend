@@ -2,8 +2,9 @@
 
 namespace UserDto.Dto
 {
-    public class UserLoginDto
+    public class UserAutDto
     {
         public string Login { get; set; }
+        public string Password { get; set; }
     }
 }

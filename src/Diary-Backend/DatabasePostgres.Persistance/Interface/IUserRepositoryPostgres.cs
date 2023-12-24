@@ -8,7 +8,7 @@ namespace DatabasePostgres.Persistance.Interface
         Task<string> CreateTableUser();
         Task<string> UserAdd(UserAddDto userAdd);
         Task<List<UserInfoDto>> GetAllUser();
-        Task<UserInfoDto> GetByUserLogin(UserLoginDto UserLoginDto);
+        Task<UserInfoDto> GetByUserLogin(UserAutDto UserAut);
 
     }
 }

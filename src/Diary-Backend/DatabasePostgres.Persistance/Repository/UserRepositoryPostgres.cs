@@ -76,13 +76,13 @@ namespace DatabasePostgres.Persistance.Repository
             return _UserInfoDto;
         }
 
-        public async Task<UserInfoDto> GetByUserLogin(UserLoginDto UserLoginDto)
+        public async Task<UserInfoDto> GetByUserLogin(UserAutDto UserAut)
         {
 
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.GetByUserInfo))
             {
-                cmd.Parameters.AddWithValue("@Login", UserLoginDto.Login);
+                cmd.Parameters.AddWithValue("@Login", UserAut.Login);
 
                 await using (var reader = await cmd.ExecuteReaderAsync())
                 {

@@ -30,11 +30,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Authorization")]
-        public async Task<IActionResult> Authorization([FromBody] UserLoginDto UserLoginDto)
+        public async Task<IActionResult> Authorization([FromBody] UserAutDto userAut)
         {
             var Content = new AuthorizationCommand
             {
-                UserLoginDto = UserLoginDto
+               UserAutDto = userAut
             };
             var answer = await mediator.Send(Content);
             return Ok(answer);
