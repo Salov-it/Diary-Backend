@@ -1,5 +1,6 @@
 using UserServices.Application;
 using DatabasePostgres.Persistance;
+using TaskListServices.Application;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,9 @@ IConfiguration configuration = builder.Configuration;
 
 //UserServices
 builder.Services.AddUserServices();
+
+//TaskListServices
+builder.Services.AddTaskListServices();
 
 //Infrastructure
 builder.Services.AddDatabasePostgres();
