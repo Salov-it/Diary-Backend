@@ -1,12 +1,11 @@
 ﻿using UserServices.Application.Interface;
 using DatabasePostgres.Persistance.Interface;
-using UserServices.Application.Dto;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 using UserServices.Application.Config;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text.Json;
+using UserDto.Dto;
 
 
 
@@ -15,40 +14,42 @@ namespace UserServices.Application.CQRS.Command.Authorization
     public class UserAuthorization : IUserAuthorization
     {
         private readonly IUserRepositoryPostgres _userRepository;
-        UserJwtToken _userJwtToken = new UserJwtToken();
-
+        
         public UserAuthorization(IUserRepositoryPostgres userRepository)
         {
             _userRepository = userRepository;
         }
 
         public string Result { get; set; }
-        public async Task<string> Authorization(UserInfoDto userInfoDto)
+        public async Task<string> Authorization(UserAutDto UserAut)
         {
             //Получаем данные пользователя из бд
-            var UserInfoContent = await _userRepository.GetByUserId(userInfoDto.Login);
-
-            if(UserInfoContent.Login == userInfoDto.Login && UserInfoContent.Password == userInfoDto.Password)
+            var UserInfoContent = await _userRepository.GetAllUser();
+            var UserContent = UserInfoContent.FirstOrDefault(u => u.Login == UserAut.Login);
+            if (UserContent == null)
             {
-                var claims = new List<Claim> { new Claim(ClaimTypes.Name,userInfoDto.Login),
-                new Claim(ClaimTypes.Role,UserInfoContent.Role)};
-
-                var jwt = new JwtSecurityToken(issuer: JwtSettings.Issuer,
-                    audience: JwtSettings.Audience,
-                    claims: claims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-                    signingCredentials: new SigningCredentials(JwtSettings.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-
-                _userJwtToken.JwtToken = new JwtSecurityTokenHandler().WriteToken(jwt);
-                var Content = JsonSerializer.Serialize(_userJwtToken);
-                Result = Content;
+                return "Ошибка: неверный логин";
             }
-            else 
+            else
             {
-                _userJwtToken.Error = "Error Authorization 401";
-                var Content = JsonSerializer.Serialize(_userJwtToken);
-                Result = Content;
-            };
+                if (UserContent.Login == UserAut.Login && UserAut.Password == UserContent.Password)
+                {
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name,UserAut.Login),
+                    new Claim(ClaimTypes.Role,UserContent.Role)};
+
+                    var jwt = new JwtSecurityToken(issuer: JwtSettings.Issuer,
+                        audience: JwtSettings.Audience,
+                        claims: claims,
+                        expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
+                        signingCredentials: new SigningCredentials(JwtSettings.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+
+                    var JwtToken = new JwtSecurityTokenHandler().WriteToken(jwt);
+                    var Content = JsonSerializer.Serialize(JwtToken);
+                    Result = Content;
+                }
+                else { Result =  "Ошибка: Неверный пароль"; }
+            }
+
             return Result;
         }
     }

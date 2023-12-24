@@ -1,8 +1,8 @@
 ﻿
 
-namespace UserServices.Application.Dto
+namespace UserDto.Dto
 {
-    public class UserInfoDto
+    public class UserAutDto
     {
         public string Login { get; set; }
         public string Password { get; set; }

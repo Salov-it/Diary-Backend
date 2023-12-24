@@ -1,14 +1,14 @@
-﻿using DatabasePostgres.Persistance.Dto;
-using UserServices.Domain;
+﻿using UserDto.Dto;
+
 
 namespace DatabasePostgres.Persistance.Interface
 {
     public interface IUserRepositoryPostgres
     {
         Task<string> CreateTableUser();
-        Task<string> UserAdd(string Login,string Password,string Phone,DateTime Create);
-        Task<string> UserUpdate(string Login,string Phone);
-        Task<UserInfoDto> GetByUserId(string Login);
-        
+        Task<string> UserAdd(UserAddDto userAdd);
+        Task<List<UserInfoDto>> GetAllUser();
+        Task<UserInfoDto> GetByUserLogin(UserAutDto UserAut);
+
     }
 }

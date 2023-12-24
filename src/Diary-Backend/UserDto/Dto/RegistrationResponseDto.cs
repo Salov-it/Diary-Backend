@@ -1,6 +1,6 @@
 ﻿
 
-namespace UserServices.Application.Dto
+namespace UserDto.Dto
 {
     public class RegistrationResponseDto
     {
