@@ -16,6 +16,7 @@ namespace DatabasePostgres.Persistance
             services.AddSingleton<NpgsqlConnection>(new NpgsqlConnection(configs.Connection));
 
             services.AddScoped<IUserRepositoryPostgres, UserRepositoryPostgres>();
+            services.AddScoped<ITaskListRepositoryPostgres, TaskListRepositoryPostgres>();
             return services;
         }
     }
