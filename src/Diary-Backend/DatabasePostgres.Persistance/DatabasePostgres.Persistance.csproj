@@ -14,7 +14,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UserDto\UserDto.csproj" />
-    <ProjectReference Include="..\UserServices.Application\UserServices.Application.csproj" />
+    <ProjectReference Include="..\UserServices.Domain\UserServices.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dto\" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using DatabasePostgres.Persistance.Dto;
-using UserDto.Dto;
+﻿using UserDto.Dto;
 
 
 namespace DatabasePostgres.Persistance.Interface
@@ -8,7 +7,8 @@ namespace DatabasePostgres.Persistance.Interface
     {
         Task<string> CreateTableUser();
         Task<string> UserAdd(UserAddDto userAdd);
+        Task<List<UserInfoDto>> GetAllUser();
         Task<UserInfoDto> GetByUserLogin(UserLoginDto UserLoginDto);
-        
+
     }
 }

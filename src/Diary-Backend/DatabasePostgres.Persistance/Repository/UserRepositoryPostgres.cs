@@ -11,7 +11,8 @@ namespace DatabasePostgres.Persistance.Repository
         private readonly string _Connect;
         Configs configs = new Configs();
         UserSqlRequest _userSql = new UserSqlRequest();
-        UserInfoDto _UserInfoDto = new UserInfoDto();
+        List<UserInfoDto> _UserInfoDto = new List<UserInfoDto>();
+        UserInfoDto _User = new UserInfoDto();
 
         public UserRepositoryPostgres()
         {
@@ -37,6 +38,7 @@ namespace DatabasePostgres.Persistance.Repository
                 {
                     new() { Value = userAdd.Login},
                     new() { Value = userAdd.Password },
+                    new() { Value = userAdd.Role },
                     new() { Value = userAdd.Phone },
                     new() { Value = userAdd.Created }
                 }
@@ -45,13 +47,42 @@ namespace DatabasePostgres.Persistance.Repository
             return "200";
         }
 
+        public async Task<List<UserInfoDto>> GetAllUser()
+        {
+
+            await using var dataSource = NpgsqlDataSource.Create(_Connect);
+            await using (var cmd = dataSource.CreateCommand(_userSql.GetAll))
+            {
+                await using (var reader = await cmd.ExecuteReaderAsync())
+                {
+
+                    while (await reader.ReadAsync())
+                    {
+                        var login = reader.GetString(1);
+                        var password = reader.GetString(2);
+                        var role = reader.GetString(3);
+                        var phone = reader.GetString(4);
+                        UserInfoDto UserInfo = new UserInfoDto
+                        {
+                            Login = login,
+                            Password = password,
+                            Role = role,
+                            Phone = phone
+                        };
+                        _UserInfoDto.Add(UserInfo);
+                    }
+                }
+            }
+            return _UserInfoDto;
+        }
+
         public async Task<UserInfoDto> GetByUserLogin(UserLoginDto UserLoginDto)
         {
-            
+
             await using var dataSource = NpgsqlDataSource.Create(_Connect);
             await using (var cmd = dataSource.CreateCommand(_userSql.GetByUserInfo))
             {
-                cmd.Parameters.AddWithValue("@Login",UserLoginDto.Login);
+                cmd.Parameters.AddWithValue("@Login", UserLoginDto.Login);
 
                 await using (var reader = await cmd.ExecuteReaderAsync())
                 {
@@ -67,12 +98,12 @@ namespace DatabasePostgres.Persistance.Repository
                             Password = password,
                             Role = role
                         };
-                        _UserInfoDto = UserInfo;
+                        _User = UserInfo;
                     }
                 }
             }
-            return _UserInfoDto;
-        }
+            return _User;
 
+        }
     }
 }
