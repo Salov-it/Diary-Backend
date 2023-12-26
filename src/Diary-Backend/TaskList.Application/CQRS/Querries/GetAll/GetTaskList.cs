@@ -1,6 +1,9 @@
 ﻿using DatabasePostgres.Persistance.Interface;
+using System.Security.Claims;
 using TaskListServices.Application.Interface;
 using TaskListServices.Dto;
+using System.Security.Claims;
+using System.Net.Http;
 
 namespace TaskListServices.Application.CQRS.Command.GetAll
 {
@@ -13,11 +16,12 @@ namespace TaskListServices.Application.CQRS.Command.GetAll
             _taskListRepositoryPostgres = taskListRepositoryPostgres;
         }
 
-        public async Task<List<GetAllTaskListDto>> GetAll()
+        public async Task<List<GetAllTaskListDto>> GetAll(GetTaskListLoginDto getTaskListLoginDto)
         {
-            var Content = await _taskListRepositoryPostgres.GetAll();
+            var Content = await _taskListRepositoryPostgres.GetAll(getTaskListLoginDto);
             if(Content.Count > 0) 
             {
+               
                 return Content;
             }
             else

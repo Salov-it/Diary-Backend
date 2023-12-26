@@ -6,5 +6,6 @@ namespace TaskListServices.Application.CQRS.Command.GetAll
 {
     public class TaskListCommand : IRequest<List<GetAllTaskListDto>>
     {
+        public GetTaskListLoginDto GetTaskListDto { get; set; }
     }
 }

@@ -3,8 +3,8 @@ using TaskListServices.Dto;
 
 namespace TaskListServices.Application.CQRS.Command.Update
 {
-    public class UpdateTaskListCommand : IRequest<UpdateTaskListDto>
+    public class UpdateTaskListCommand : IRequest<string>
     {
-        public UpdateTaskListDto UpdateTaskListDto { get; set; }
+        public UpdateTaskListDto UpdateTaskListDto { get; set; }    
     }
 }

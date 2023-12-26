@@ -13,8 +13,19 @@ namespace TaskListServices.Application.CQRS.Command.Create
         }
         public async Task<string> Handle(CreateTaskListCommand request, CancellationToken cancellationToken)
         {
+            var Validation = new CreateTaskListCommandValidation();
+            var validationResult = Validation.Validate(request);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    return error.ErrorMessage;
+                }
+            }
+
             var Content = await _createTaskList.Create(request.CreateTaskListDto);
-            if(Content != null) 
+
+            if (Content != null) 
             {
                 Result = "Выполнено";
             }

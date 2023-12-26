@@ -12,7 +12,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "User")]
     public class TaskListServicesController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -44,20 +44,15 @@ namespace WebApi.Controllers
             return Ok(answer);
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        [HttpPost("GetAll")]
+        public async Task<IActionResult> GetAll([FromBody] GetTaskListLoginDto getTaskListLogin)
         {
             var Content = new TaskListCommand
             {
-                
+                GetTaskListDto = getTaskListLogin
             };
             var answer = await mediator.Send(Content);
-
-            ClaimsPrincipal User = this.User;
-            string UserName = User.FindFirst(ClaimTypes.Name)?.Value;
-            var UserObjects = answer.Where(obj => obj.NickName == UserName).ToList();
-
-            return Ok(UserObjects);
+            return Ok(answer);
         }
 
         [HttpDelete("Delete")]

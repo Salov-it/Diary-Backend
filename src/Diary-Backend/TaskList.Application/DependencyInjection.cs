@@ -1,10 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using TaskListServices.Application.CQRS.Command.Create;
 using TaskListServices.Application.CQRS.Command.Delete;
 using TaskListServices.Application.CQRS.Command.GetAll;
 using TaskListServices.Application.CQRS.Command.Update;
 using TaskListServices.Application.CQRS.Command.Upgate;
+using TaskListServices.Application.CQRS.Querries.GetAll;
 using TaskListServices.Application.Interface;
 
 namespace TaskListServices.Application
@@ -14,6 +17,11 @@ namespace TaskListServices.Application
         public static IServiceCollection AddTaskListServices(this IServiceCollection services)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            services.AddTransient<IValidator<CreateTaskListCommand>, CreateTaskListCommandValidation>();
+            services.AddTransient<IValidator<UpdateTaskListCommand>, UpdateTaskListCommandValidation>();
+            services.AddTransient<IValidator<DeleteTaskListDtoCommand>, DeleteTaskListDtoCommandValidation>();
+            services.AddTransient<IValidator<TaskListCommand>, TaskListCommandValidation>();
 
             services.AddScoped<ICreateTaskList, CreateTaskList>();
 

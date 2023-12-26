@@ -6,7 +6,7 @@ namespace DatabasePostgres.Persistance.Interface
     {
         Task<string> CreateTable();
         Task<string> Add(PostTaskListDto taskListDto);
-        Task<List<GetAllTaskListDto>> GetAll();
+        Task<List<GetAllTaskListDto>> GetAll(GetTaskListLoginDto getTaskListLoginDto);
         Task<UpdateTaskListDto> Update(UpdateTaskListDto updateTaskListDto);
         Task<string> Delete(DeleteTaskListDto deleteTaskListDto);
 

@@ -4,12 +4,12 @@ namespace DatabasePostgres.Persistance.SqlRequest.TaskListSqlRequest
 {
     public class TaskListSqlRequest
     {
-        public string CreateTasksTable = "CREATE TABLE Tasks (id SERIAL PRIMARY KEY,NickName TEXT,texts TEXT,StatusTasks BOOLEAN, Created DATE);";
+        public string CreateTasksTable = "CREATE TABLE tasks (id SERIAL PRIMARY KEY,Login TEXT,texts TEXT,StatusTasks BOOLEAN, Created DATE);";
 
-        public string Add = $"INSERT INTO tasks (NickName,texts,StatusTasks,Created)" +
+        public string Add = $"INSERT INTO tasks (Login,texts,StatusTasks,Created)" +
             "VALUES ($1,$2,$3,$4);";
 
-        public string GetTasksInfo = "SELECT * FROM Tasks;";
+        public string GetTasksInfo = "SELECT * FROM tasks WHERE login = $1;";
 
         public string Delete = "DELETE FROM tasks WHERE id = $1;";
 

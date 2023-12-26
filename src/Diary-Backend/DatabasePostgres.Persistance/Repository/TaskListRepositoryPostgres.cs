@@ -16,8 +16,8 @@ namespace DatabasePostgres.Persistance.Repository
             {
                 Parameters =
                 {
-                    new() { Value = taskListDto.NickName },
-                    new() { Value = taskListDto.text },
+                    new() { Value = taskListDto.Login },
+                    new() { Value = taskListDto.Text },
                     new() { Value = taskListDto.StatusTasks },
                     new() { Value = taskListDto.Created }
                 } 
@@ -54,18 +54,26 @@ namespace DatabasePostgres.Persistance.Repository
 
         public GetAllTaskListDto TaskListDto = new GetAllTaskListDto();
         public List<GetAllTaskListDto> Result = new List<GetAllTaskListDto>();
-        public async Task<List<GetAllTaskListDto>> GetAll()
+        public async Task<List<GetAllTaskListDto>> GetAll(GetTaskListLoginDto getTaskListLoginDto)
         {
-            await using var dataSource = NpgsqlDataSource.Create(_Connect);
-            await using (var cmd = dataSource.CreateCommand(_TaskSql.GetTasksInfo))
+            await using var conn = new NpgsqlConnection(_Connect);
+            await conn.OpenAsync();
+            await using var cmd = new NpgsqlCommand(_TaskSql.GetTasksInfo, conn)
             {
+                Parameters =
+                {
+                    new() { Value = getTaskListLoginDto.Login },
+
+                }
+            };
+            
                 await using (var reader = await cmd.ExecuteReaderAsync())
                 {
 
                     while (await reader.ReadAsync())
                     {
                         var id = reader.GetInt16(0);
-                        var NickName = reader.GetString(1);
+                        var Login = reader.GetString(1);
                         var text = reader.GetString(2);
                         var StatusTasks = reader.GetBoolean(3);
                         var Created = reader.GetDateTime(4);
@@ -73,15 +81,15 @@ namespace DatabasePostgres.Persistance.Repository
                         TaskListDto = new GetAllTaskListDto
                         {
                             id = id,
-                            NickName = NickName,
-                            text = text,
+                            Login = Login,
+                            Text = text,
                             StatusTasks = StatusTasks,
                             Created = Created
                         };
                         Result.Add(TaskListDto);
                     }
                 }
-            }
+            
             return Result;
         }
 
@@ -95,7 +103,7 @@ namespace DatabasePostgres.Persistance.Repository
                 Parameters =
                 {
                     new() { Value = updateTaskListDto.id },
-                    new() { Value = updateTaskListDto.text },
+                    new() { Value = updateTaskListDto.Text },
                     new() { Value = updateTaskListDto.StatusTasks }
                 }
             };
@@ -112,7 +120,7 @@ namespace DatabasePostgres.Persistance.Repository
                  updateTaskListDto = new UpdateTaskListDto
                  {
                    id = id,
-                   text = text,
+                   Text = text,
                    StatusTasks = StatusTasks
                  };
               }

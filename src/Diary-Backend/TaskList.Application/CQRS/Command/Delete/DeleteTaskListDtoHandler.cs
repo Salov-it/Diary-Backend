@@ -12,6 +12,15 @@ namespace TaskListServices.Application.CQRS.Command.Delete
         }
         public async Task<string> Handle(DeleteTaskListDtoCommand request, CancellationToken cancellationToken)
         {
+            var Validation = new DeleteTaskListDtoCommandValidation();
+            var validationResult = Validation.Validate(request);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    return error.ErrorMessage;
+                }
+            }
             var Content = await _deletTaskList.Delete(request.deleteTaskListDto);
             if(Content != null)
             {
