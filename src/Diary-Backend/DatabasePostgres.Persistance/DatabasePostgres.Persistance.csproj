@@ -24,8 +24,5 @@
     <ProjectReference Include="..\UserServices.Domain\UserServices.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SqlRequest\TaskListSqlRequest\" />
-  </ItemGroup>
 
 </Project>
