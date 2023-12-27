@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
-using System.Text;
 using UserServices.Application.Config;
 using UserServices.Application.CQRS.Command.Authorization;
 using UserServices.Application.CQRS.Command.UserRegistration;
@@ -16,6 +15,9 @@ namespace UserServices.Application
         public static IServiceCollection AddUserServices(this IServiceCollection services)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            services.AddTransient<IValidator<RegistrationCommand>, RegistrationCommandValidation>();
+            services.AddTransient<IValidator<AuthorizationCommand>, AuthorizationCommandValidation>();
 
             services.AddScoped<IRegistration,Registration>();
             services.AddScoped<RegistrationCommand>();

@@ -13,9 +13,25 @@ namespace UserServices.Application.CQRS.Command.Authorization
         }
         public async Task<string> Handle(AuthorizationCommand request, CancellationToken cancellationToken)
         {
-            
+            var Validation = new AuthorizationCommandValidation();
+            var validationResult = Validation.Validate(request);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    return error.ErrorMessage;
+                }
+            }
+
             var Content = await _userAuthorization.Authorization(request.UserAutDto);
-            return Content;
+            if (Content != null)
+            {
+                return Content;
+            }
+            else
+            {
+                return "Ошибка";
+            }
         }
     }
 }

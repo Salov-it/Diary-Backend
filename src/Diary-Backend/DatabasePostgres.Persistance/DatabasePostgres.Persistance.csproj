@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\**" />
+    <EmbeddedResource Remove="Dto\**" />
+    <None Remove="Dto\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="Npgsql" Version="7.0.6" />
@@ -15,10 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\UserDto\UserDto.csproj" />
     <ProjectReference Include="..\UserServices.Domain\UserServices.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dto\" />
   </ItemGroup>
 
 </Project>

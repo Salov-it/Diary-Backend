@@ -12,7 +12,27 @@ namespace UserServices.Application.CQRS.Command.UserRegistration
         }
         public async Task<string> Handle(RegistrationCommand request, CancellationToken cancellationToken)
         {
-            return await _RegisterAsync.RegisterAsync(request.UserAdd);
+            var Validation = new RegistrationCommandValidation();
+            var validationResult = Validation.Validate(request);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    return error.ErrorMessage;
+                }
+            }
+
+            var Content = await _RegisterAsync.RegisterAsync(request.UserAdd);
+
+            if (Content != null)
+            {
+                return Content;
+            }
+            else
+            {
+                return "Ошибка";
+            }
+               
         }
     }
 }
